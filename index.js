@@ -1,6 +1,7 @@
 "use strict";
 var W, H, S = 20;
-var snake = [], foods = [];
+var snake = [];		//ヘビの座標を保持する配列
+var foods = [];		//餌の座標を保持する配列
 var keyCode = 0;
 var point = 0;
 var timer = NaN;
@@ -15,12 +16,13 @@ function Point(x, y) {
 //初期化変数
 function init() {
 	var canvas = document.getElementById('field');
+	//20×20マスをゲーム領域とする
 	W = canvas.width / S;
 	H = canvas.height / S;
 	ctx = canvas.getContext('2d');
 	ctx.font = "20px sans-serif";
 
-	//ヘビの初期化
+	//ヘビの初期化(画面中心をヘビの頭とする)
 	snake.push(new Point(W / 2, H / 2));
 
 	//餌の初期化
@@ -37,6 +39,7 @@ function addFood() {
 	while (true) {
 		var x = Math.floor(Math.random() * W);
 		var y = Math.floor(Math.random() * H);
+		//ヘビと餌がない場所を探す
 		if (isHit(foods, x, y) || isHit(snake, x, y)) {
 			continue;
 		}
@@ -117,10 +120,10 @@ function paint() {
 	ctx.fillText(point, S, S * 2);
 	ctx.fillStyle = "rgb(0, 0, 255)";
 	foods.forEach(function (p) {
-		ctx.fillText("+", p.x * S, (p.y + 1) * S);
+		ctx.fillText("■", p.x * S, (p.y + 1) * S);
 	});
 	snake.forEach(function (p) {
-			ctx.fillText("*", p.x * S, (p.y + 1) * S);
+			ctx.fillText("□", p.x * S, (p.y + 1) * S);
 	});
 }
 
